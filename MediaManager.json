@@ -1,0 +1,1447 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1",
+    "title": "MediaManager API",
+    "description": "An API to manage your offline activities.",
+    "contact": {
+      "name": "Akansha Raman",
+      "url": "akansharman.github.io",
+      "email": "akansha.raman23@gmail.com"
+    }
+  },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs in a user(works on the basis of tokens)",
+        "operationId": "ApiAuthLoginPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "creadential",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CredentialModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/auth/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Creates token",
+        "operationId": "ApiAuthTokenPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "Credential of user",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CredentialModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Tags/{contentId}/{id}": {
+      "get": {
+        "tags": [
+          "Tag"
+        ],
+        "summary": "Retrieves a list of tags for a particular item of a particular content type",
+        "operationId": "ApiTagsByContentIdByIdGet",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "description": "contentid denoting the media type",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "the id of the item for which tags are to be retrieved",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tags retrieved",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Tags retrieval parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve tags entry right now"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tag"
+        ],
+        "summary": "Creates tags for a particular item of a particular content type",
+        "operationId": "ApiTagsByContentIdByIdPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "description": "the id of content which dones the type of content",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "tags",
+            "in": "body",
+            "description": "List of tags to be added",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TagsInputDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Tags creation parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't create tags entry right now"
+          },
+          "201": {
+            "description": "Tags created"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tag"
+        ],
+        "summary": "Deletes tags for a particular item of a particular content type",
+        "operationId": "ApiTagsByContentIdByIdDelete",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "description": "the id of content which dones the type of content",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "tags",
+            "in": "body",
+            "description": "List of tags to be deleted",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TagsInputDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Tags deletion parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't delete tags entry right now"
+          },
+          "201": {
+            "description": "Tags deleted"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Tag"
+        ],
+        "summary": "Creates tags for a particular item of a particulat content type",
+        "operationId": "ApiTagsByContentIdByIdPatch",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "description": "the id of content which dones the type of content",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "patchDocument",
+            "in": "body",
+            "description": "list of json patch documents containing the update informations",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Operation"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Tags updation parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't update tags entry right now"
+          },
+          "201": {
+            "description": "Tags updated"
+          }
+        }
+      }
+    },
+    "/api/Users/{username}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Gets a User using username",
+        "operationId": "ApiUsersByUsernameGet",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User entry retrieved",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "user retrieval parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve the user entry right now"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates a user",
+        "operationId": "ApiUsersByUsernamePut",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username of the user to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userForUpdateDto",
+            "in": "body",
+            "description": "the body of the user to be updated. This is a full update. So all the parameters to be updated shoudl be mentioned in addition to other parameters. If a parameter is null or missing, it will be updated to null",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserForUpdateDTO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User entry updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "user creation parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't create user entry right now"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deletes a user using username",
+        "operationId": "ApiUsersByUsernameDelete",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User entry deleted"
+          },
+          "400": {
+            "description": "user retrieval parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't delet user entry right now"
+          }
+        }
+      }
+    },
+    "/api/Users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Gets Users and applies the search, sort, filter and pagedResult parameters.",
+        "operationId": "ApiUsersGet",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "Fields",
+            "in": "query",
+            "description": "Fields separated by comma asked by user to return",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "description": "properties by which users have to be sorted",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Username",
+            "in": "query",
+            "description": "Username",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "description": "search query to be searched",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "size of the page set to the minimum of maxPgeSize or user provided value",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User entries retrieved",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "users retrieval parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve users entry right now"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates a User",
+        "operationId": "ApiUsersPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "userForCreationDto",
+            "in": "body",
+            "description": "user details to be created",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserForCreationDTO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "user creation parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't create user entry right now"
+          },
+          "204": {
+            "description": "User entry created"
+          }
+        }
+      }
+    },
+    "/api/Users/{user}": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Partially updates a user",
+        "operationId": "ApiUsersByUserPatch",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "username of the user to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "patchDocument",
+            "in": "body",
+            "description": "the patch documents containing the list of updates to be applied to a user",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Operation"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User entry updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "user creation parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't create user entry right now"
+          }
+        }
+      }
+    },
+    "/api/user/{username}/videos": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Retrieves a video based on username and videoId and exposes the desired fields.",
+        "operationId": "ApiUserByUsernameVideosGet",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "fields of video to be exposed",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video entry retrieved",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Video search parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve your video entry right now"
+          }
+        }
+      }
+    },
+    "/api/videos/{videoId}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Retrieves a video based on videoId and exposes the desired fields.",
+        "operationId": "ApiVideosByVideoIdGet",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "videoId",
+            "in": "path",
+            "description": "Id of video",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "fields of video to be exposed",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video entry retrieved",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Video search parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve your video entry right now"
+          }
+        }
+      }
+    },
+    "/api/user/{username}/videosv2": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Retrieves a video based on username and exposes the desired fields.",
+        "operationId": "ApiUserByUsernameVideosv2Get",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Fields",
+            "in": "query",
+            "description": "Fields asked by user",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "description": "the fields by which video have to be sorted",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Title",
+            "in": "query",
+            "description": "Tiltle to be searched",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "description": "Search query to be searched",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Page number to be searched",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "description": "Page number to be searched",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "size of the page set to the minimum of maxPageSize or user provided value",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "the media type value derived from the header value of Accept",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video entry retrieved",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Video search parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't retrieve your video entry right now"
+          }
+        }
+      }
+    },
+    "/api/user/videos": {
+      "put": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Updates a video.",
+        "operationId": "ApiUserVideosPut",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "videoForUpdate",
+            "in": "body",
+            "description": "Full body of the video to be updated. If any parameter is null or missing , it will be set to null",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VideoForUpdateDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video entry updated",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Video update parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't update your video entry right now"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Creates a video entry",
+        "operationId": "ApiUserVideosPost",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json",
+          "application/xml",
+          "text/xml",
+          "application/*+xml"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/vnd.ak.hateoas+json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "videoForCreationDTO",
+            "in": "body",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/VideoForCreationDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Video entry created",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Video entry parameter has missing/invalid values",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Oops! Can't create your video entry right now"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CredentialModel": {
+      "description": "credential model",
+      "required": [
+        "userName",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "userName": {
+          "description": "Username",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password",
+          "type": "string"
+        }
+      }
+    },
+    "TagsInputDTO": {
+      "description": "Class containing a list of tags",
+      "type": "object",
+      "properties": {
+        "tags": {
+          "description": "list of tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Operation": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "object"
+        },
+        "path": {
+          "type": "string"
+        },
+        "op": {
+          "type": "string"
+        },
+        "from": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "required": [
+        "username",
+        "email",
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "username": {
+          "minLength": 8,
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "registrationDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "UserForUpdateDTO": {
+      "required": [
+        "email"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "UserForCreationDTO": {
+      "required": [
+        "username",
+        "email",
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "username": {
+          "minLength": 8,
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Video": {
+      "required": [
+        "title",
+        "url"
+      ],
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "authorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "author": {
+          "$ref": "#/definitions/Participant"
+        },
+        "duration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "watchOffset": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "uploadedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "domainId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "domain": {
+          "$ref": "#/definitions/Domain"
+        },
+        "properties": {
+          "type": "string"
+        },
+        "videoParticipants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VideoParticipant"
+          }
+        },
+        "lastWatchedDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "participantId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "participantName": {
+          "type": "string"
+        },
+        "videos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Video"
+          }
+        },
+        "audios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Audio"
+          }
+        },
+        "videoParticipants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VideoParticipant"
+          }
+        }
+      }
+    },
+    "Domain": {
+      "required": [
+        "domainName"
+      ],
+      "type": "object",
+      "properties": {
+        "domainId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "domainName": {
+          "type": "string"
+        }
+      }
+    },
+    "VideoParticipant": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "$ref": "#/definitions/Video"
+        },
+        "videoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "participant": {
+          "$ref": "#/definitions/Participant"
+        },
+        "participantId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "Audio": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "audioId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "authorId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "author": {
+          "$ref": "#/definitions/Participant"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "watchOffset": {
+          "type": "string"
+        },
+        "uploadedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "domainId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "domain": {
+          "$ref": "#/definitions/Domain"
+        },
+        "properties": {
+          "type": "string"
+        },
+        "lastWatchedDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "VideoForCreationDTO": {
+      "required": [
+        "title",
+        "url",
+        "domain",
+        "username"
+      ],
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorName": {
+          "type": "string"
+        },
+        "duration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "watchOffset": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "uploadedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastWatchedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "properties": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "VideoForUpdateDTO": {
+      "required": [
+        "title",
+        "url",
+        "username",
+        "domain"
+      ],
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authorName": {
+          "type": "string"
+        },
+        "duration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "watchOffset": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "uploadedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "lastWatchedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "properties": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
